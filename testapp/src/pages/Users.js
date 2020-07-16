@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {connect} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 class Users extends React.Component {
   constructor() {
@@ -29,20 +30,22 @@ class Users extends React.Component {
     console.log('USERS DATA', this.props.friends.users_data);
     var data = this.props.friends.users_data;
     return (
-      <View style={styles.container}>
-        {data && (
-          <View style={{flex: 1}}>
-            {this.renderHeader()}
-            {this.renderList()}
-          </View>
-        )}
+      <ScrollView>
+        <View style={styles.container}>
+          {data && (
+            <View>
+              {this.renderHeader()}
+              {this.renderList()}
+            </View>
+          )}
 
-        {this.state.isLoading && (
-          <View style={styles.isLoading}>
-            <ActivityIndicator size="large" color="rgb(98,176,223)" />
-          </View>
-        )}
-      </View>
+          {this.state.isLoading && (
+            <View style={styles.isLoading}>
+              <ActivityIndicator size="large" color="rgb(98,176,223)" />
+            </View>
+          )}
+        </View>
+      </ScrollView>
     );
   }
 
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
   },
   firstName: {
     fontSize: hp(20),
-    paddingRight: wp(5),
+    paddingRight: wp(4),
     color: '#57606f',
   },
   lastName: {
