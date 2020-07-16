@@ -1,21 +1,35 @@
-import {View, Text, StyleSheet, Image, TextInput, CheckBox} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  CheckBox,
+  ActivityIndicator,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {wp, hp} from '../common';
+import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import Button from '../components/Button';
+import {connect} from 'react-redux';
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
       checked: true,
-      email: '',
-      password: '',
+      email: 'eve.holt@reqres.in',
+      password: 'pistol',
+      username: 'Ridwan',
       isLoading: false,
     };
   }
+
+  handleUsername = (text) => {
+    this.setState({username: text});
+  };
 
   handleEmail = (text) => {
     this.setState({email: text});
@@ -27,30 +41,48 @@ export default class SignUp extends React.Component {
 
   submit() {
     this.setState({isLoading: true});
-    const {email, password} = this.state;
+    const {email, password, username} = this.state;
 
-    if (email.trim() === '' || password.trim() === '') {
+    if (
+      email.trim() === '' ||
+      password.trim() === '' ||
+      username.trim() === ''
+    ) {
       alert('enter a valid parameter');
     } else {
-      fetch(`https://reqres.in/api/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log('Success', json);
-          this.setState({isLoading: false});
-          alert(`your token is ` + json.token);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      var data = {
+        email: email.toLowerCase(),
+        password: password,
+      };
+
+      this.props.registerUser(data).then((a) => {
+        console.log(a);
+        this.setState({isLoading: false});
+        if (this.props.friends.register_token) {
+          this.props.navigation.navigate('Sign In');
+        } else {
+          alert("you've entered the wrong parameter");
+        }
+      });
+      // fetch(`https://reqres.in/api/register`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     email,
+      //     password,
+      //   }),
+      // })
+      //   .then((response) => response.json())
+      //   .then((json) => {
+      //     console.log('Success', json);
+      //     this.setState({isLoading: false});
+      //     alert(`your token is ` + json.token);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
     }
   }
 
@@ -61,12 +93,15 @@ export default class SignUp extends React.Component {
           <View>
             <Image
               style={styles.backgroundImage}
-              source={require('./abstract-art-artistic-background-1103970.jpg')}
+              source={require('../assets/images/abstract-art-artistic-background-1103970.jpg')}
             />
 
             <View style={styles.upperContainer}>
               <View style={styles.roundedImage}>
-                <Image source={require('./logo.png')} style={styles.logo} />
+                <Image
+                  source={require('../assets/images/logo.png')}
+                  style={styles.logo}
+                />
               </View>
 
               <Text style={styles.welcomeText}>Sign Up!</Text>
@@ -83,6 +118,11 @@ export default class SignUp extends React.Component {
             </Text>
           </View>
         </View>
+        {this.state.isLoading && (
+          <View style={styles.isLoading}>
+            <ActivityIndicator size="large" color="rgb(98,176,223)" />
+          </View>
+        )}
       </ScrollView>
     );
   }
@@ -94,6 +134,8 @@ export default class SignUp extends React.Component {
           placeholder="Username"
           style={styles.textInput}
           placeholderTextColor="rgba(87, 96, 111,1.0)"
+          onChangeText={this.handleUsername}
+          value={this.state.username}
         />
         <TextInput
           placeholder="E-mail"
@@ -101,6 +143,7 @@ export default class SignUp extends React.Component {
           style={styles.textInput}
           placeholderTextColor="rgba(87, 96, 111,1.0)"
           onChangeText={this.handleEmail}
+          value={this.state.email}
         />
         <TextInput
           placeholder="Password"
@@ -108,6 +151,7 @@ export default class SignUp extends React.Component {
           placeholderTextColor="rgba(87, 96, 111,1.0)"
           secureTextEntry={true}
           onChangeText={this.handlePassword}
+          value={this.state.password}
         />
 
         <View style={styles.baseText}>
@@ -138,7 +182,25 @@ export default class SignUp extends React.Component {
   };
 }
 
+const mapState = (state) => ({
+  friends: state.friends,
+});
+
+const mapDispatch = (dispatch) => ({
+  registerUser: (data) => dispatch.friends.registerUser(data),
+});
+
+export default connect(mapState, mapDispatch)(SignUp);
+
 const styles = StyleSheet.create({
+  isLoading: {
+    position: 'absolute',
+    width: deviceWidth,
+    height: deviceHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
   buttonText: {
     fontSize: hp(20),
     color: 'rgba(255, 255, 255,1)',

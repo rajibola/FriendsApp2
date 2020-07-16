@@ -29,7 +29,7 @@ export const friends = {
         register_id: id,
       };
     },
-    saveRegisterId(state, token) {
+    saveRegisterToken(state, token) {
       return {
         ...state,
         register_token: token,
@@ -81,6 +81,7 @@ export const friends = {
         .then((json) => {
           this.saveRegisterId(json.id);
           this.saveRegisterToken(json.token);
+          console.log(json);
         })
         .catch((error) => {
           console.log(error);

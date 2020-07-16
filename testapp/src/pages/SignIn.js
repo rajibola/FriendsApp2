@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import React from 'react';
-import {wp, hp, deviceWidth, deviceHeight} from './common';
-import Button from './Button';
+import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
+import Button from '../components/Button';
 
 class SignIn extends React.Component {
   constructor() {
@@ -49,36 +49,10 @@ class SignIn extends React.Component {
         this.setState({isLoading: false});
         if (this.props.friends.access_token) {
           this.props.navigation.navigate('Sign Up');
-          // console.log(this.props.friends.access_token);
-          alert('your token is right');
         } else {
           alert("you've entered the wrong parameter");
         }
       });
-
-      // alert('done');
-      //if(this.props.friends.acc){
-
-      // }
-      // fetch('https://reqres.in/api/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     email,
-      //     password,
-      //   }),
-      // })
-      //   .then((response) => response.json())
-      //   .then((json) => {
-      //     console.log('Success', json);
-      //     this.setState({isLoading: false});
-      //     alert('your token is ' + json.token);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
     }
   }
 
@@ -89,12 +63,15 @@ class SignIn extends React.Component {
           <View>
             <Image
               style={styles.backgroundImage}
-              source={require('./abstract-art-artistic-background-1103970.jpg')}
+              source={require('../assets/images/abstract-art-artistic-background-1103970.jpg')}
             />
 
             <View style={styles.upperContainer}>
               <View style={styles.roundedImage}>
-                <Image source={require('./logo.png')} style={styles.logo} />
+                <Image
+                  source={require('../assets/images/logo.png')}
+                  style={styles.logo}
+                />
               </View>
 
               <Text style={styles.welcomeText}>Welcome, Guest!</Text>

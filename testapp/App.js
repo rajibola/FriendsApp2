@@ -26,11 +26,11 @@ import {
   StatusBar,
 } from 'react-native';
 
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import SignIn from './src/pages/SignIn';
+import SignUp from './src/pages/SignUp';
 import {Provider} from 'react-redux';
 import {init} from '@rematch/core';
-import {friends} from './redux/models.js';
+import {friends} from './src/redux/models.js';
 
 const Stack = createStackNavigator();
 
