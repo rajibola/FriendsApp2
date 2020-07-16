@@ -48,7 +48,7 @@ class SignIn extends React.Component {
         console.log(a);
         this.setState({isLoading: false});
         if (this.props.friends.access_token) {
-          this.props.navigation.navigate('Sign Up');
+          this.props.navigation.navigate('Users');
         } else {
           alert("you've entered the wrong parameter");
         }

@@ -8,6 +8,7 @@ export const friends = {
     access_token: null,
     register_id: null,
     register_token: null,
+    users_data: null,
   },
 
   reducers: {
@@ -33,6 +34,13 @@ export const friends = {
       return {
         ...state,
         register_token: token,
+      };
+    },
+
+    saveUsersList(state, users) {
+      return {
+        ...state,
+        users_data: users,
       };
     },
   },
@@ -85,6 +93,19 @@ export const friends = {
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+
+    async listUsers(data, state) {
+      await fetch(`${baseURL}/users?page=${data || 1}`)
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+          // return this.setState({ data: json.data, isLoading: false });
+          this.saveUsersList(json);
+        })
+        .catch((error) => {
+          console.error(error);
         });
     },
   },

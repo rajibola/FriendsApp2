@@ -28,6 +28,8 @@ import {
 
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
+import Users from './src/pages/Users';
+
 import {Provider} from 'react-redux';
 import {init} from '@rematch/core';
 import {friends} from './src/redux/models.js';
@@ -49,6 +51,7 @@ const App = () => {
         <Stack.Navigator initialRouteName="Sign In">
           <Stack.Screen name="Sign In" component={SignIn} />
           <Stack.Screen name="Sign Up" component={SignUp} />
+          <Stack.Screen name="Users" component={Users} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

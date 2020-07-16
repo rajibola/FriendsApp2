@@ -7,8 +7,6 @@ import {
   CheckBox,
   ActivityIndicator,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
@@ -59,7 +57,7 @@ class SignUp extends React.Component {
         console.log(a);
         this.setState({isLoading: false});
         if (this.props.friends.register_token) {
-          this.props.navigation.navigate('Sign In');
+          this.props.navigation.navigate('Users');
         } else {
           alert("you've entered the wrong parameter");
         }
