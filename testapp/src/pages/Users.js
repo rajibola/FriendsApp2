@@ -27,7 +27,7 @@ class Users extends React.Component {
     });
   }
   render() {
-    console.log('USERS DATA', this.props.friends.users_data);
+    // console.log('USERS DATA', this.props.friends.users_data);
     var data = this.props.friends.users_data;
     return (
       <ScrollView>
@@ -57,8 +57,8 @@ class Users extends React.Component {
           data={data}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={
-                (() => this.props.navigation.navigate('Profile'), {id: item.id})
+              onPress={() =>
+                this.props.navigation.navigate('Profile', {id: item.id})
               }>
               <View style={styles.list}>
                 <Image style={styles.image} source={{uri: item.avatar}} />
