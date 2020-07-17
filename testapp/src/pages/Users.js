@@ -56,7 +56,10 @@ class Users extends React.Component {
         <FlatList
           data={data}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={
+                (() => this.props.navigation.navigate('Profile'), {id: item.id})
+              }>
               <View style={styles.list}>
                 <Image style={styles.image} source={{uri: item.avatar}} />
                 <View>
