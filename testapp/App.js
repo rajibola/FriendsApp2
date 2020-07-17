@@ -53,7 +53,11 @@ const App = () => {
           <Stack.Screen name="Sign In" component={SignIn} />
           <Stack.Screen name="Sign Up" component={SignUp} />
           <Stack.Screen name="Users" component={Users} />
-          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={({route}) => ({title: route.params.firstName})}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

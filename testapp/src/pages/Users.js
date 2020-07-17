@@ -58,7 +58,10 @@ class Users extends React.Component {
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.navigate('Profile', {id: item.id})
+                this.props.navigation.navigate('Profile', {
+                  id: item.id,
+                  firstName: item.first_name,
+                })
               }>
               <View style={styles.list}>
                 <Image style={styles.image} source={{uri: item.avatar}} />

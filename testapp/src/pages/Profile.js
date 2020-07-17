@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/dist/Fontisto';
+import Icona from 'react-native-vector-icons/dist/Entypo';
 
 class Profile extends React.Component {
   constructor() {
@@ -54,11 +55,17 @@ class Profile extends React.Component {
     var {data, ad} = this.props.friends.user_data;
     return (
       <View style={styles.profileScreen}>
-        <Image style={styles.image} source={{uri: data.avatar}} />
+        <View style={styles.imageIconView}>
+          <Icon name="player-settings" size={18} color="#fff" />
+          <Image style={styles.image} source={{uri: data.avatar}} />
+          <Icona name="forward" size={18} color="#fff" />
+        </View>
+
         <View style={styles.name}>
           <Text style={styles.firstName}>{data.first_name}</Text>
           <Text style={styles.lastName}>{data.last_name}</Text>
         </View>
+
         <Text style={styles.profession}>Software Engineer</Text>
 
         <View style={styles.box}>
@@ -112,6 +119,11 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(Profile);
 
 const styles = StyleSheet.create({
+  imageIconView: {
+    marginTop: wp(60),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   linkText: {
     paddingLeft: wp(5),
     textTransform: 'lowercase',
@@ -147,9 +159,8 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255,1)',
   },
   button: {
-    marginTop: hp(18),
+    marginTop: hp(12),
     width: wp(350),
-    // borderWidth: 1,
     height: hp(55),
     justifyContent: 'center',
     alignItems: 'center',
@@ -193,7 +204,7 @@ const styles = StyleSheet.create({
     height: deviceHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,1)',
+    backgroundColor: 'rgba(0,0,0,.4)',
     zIndex: 1000,
   },
   firstName: {
@@ -221,8 +232,7 @@ const styles = StyleSheet.create({
     width: wp(100),
     height: wp(100),
     borderRadius: wp(50),
-    marginTop: wp(70),
-    margin: wp(10),
+    margin: wp(18),
     backgroundColor: 'rgba(0,0,0,1)',
   },
   backgroundImage: {
