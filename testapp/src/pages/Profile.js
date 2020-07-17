@@ -13,7 +13,7 @@ import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../components/Button';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon from 'react-native-vector-icons/dist/Fontisto';
 
 class Profile extends React.Component {
   constructor() {
@@ -41,6 +41,11 @@ class Profile extends React.Component {
             {this.renderData()}
           </View>
         )}
+        {this.state.isLoading && (
+          <View style={styles.isLoading}>
+            <ActivityIndicator size="large" color="rgb(98,176,223)" />
+          </View>
+        )}
       </View>
     );
   }
@@ -60,9 +65,20 @@ class Profile extends React.Component {
           <Text style={styles.aboutMe}>ABOUT ME</Text>
           <Text style={styles.level}>CEO at {ad.company}</Text>
           <Text style={styles.aboutMeText}>{ad.text}</Text>
-          <View>
-            <View>
-              <Icon name="rocket" size={30} color="#900" />
+
+          <View style={styles.linkView}>
+            <View style={styles.link}>
+              <Icon name="world-o" size={13} color="#636e72" />
+              <Text style={styles.linkText}>
+                {/* www.{data.first_name}
+                {data.last_name}.com */}
+
+                {ad.url}
+              </Text>
+            </View>
+            <View style={styles.link}>
+              <Icon name="email" size={13} color="#636e72" />
+              <Text style={styles.linkText}>{data.email}</Text>
             </View>
           </View>
         </View>
@@ -70,12 +86,6 @@ class Profile extends React.Component {
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Follow Me</Text>
         </TouchableOpacity>
-
-        {this.state.isLoading && (
-          <View style={styles.isLoading}>
-            <ActivityIndicator size="large" color="rgb(98,176,223)" />
-          </View>
-        )}
       </View>
     );
   }
@@ -102,6 +112,24 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(Profile);
 
 const styles = StyleSheet.create({
+  linkText: {
+    paddingLeft: wp(5),
+    textTransform: 'lowercase',
+    color: '#636e72',
+    fontSize: hp(14),
+  },
+  linkView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: hp(12),
+  },
+  link: {
+    alignItems: 'center',
+    height: hp(18),
+    justifyContent: 'center',
+    flexDirection: 'row',
+    // width: wp(130),
+  },
   level: {
     marginTop: hp(15),
     color: '#636e72',
@@ -166,6 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,1)',
+    zIndex: 1000,
   },
   firstName: {
     fontSize: hp(25),
@@ -186,6 +215,7 @@ const styles = StyleSheet.create({
     width: deviceWidth,
     height: deviceHeight,
     // backgroundColor: 'rgba(0,0,0,0)',
+    zIndex: 10,
   },
   image: {
     width: wp(100),
