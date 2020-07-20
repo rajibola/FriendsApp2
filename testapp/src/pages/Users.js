@@ -17,17 +17,22 @@ class Users extends React.Component {
     super();
     this.state = {
       isLoading: false,
+      pageNumber: 1,
     };
   }
 
   componentDidMount() {
+    this.paginate(this.state.pageNumber);
+  }
+
+  paginate(pageNo) {
+    console.log('PAGE NO', pageNo);
     this.setState({isLoading: true});
-    this.props.listUsers(1).then((a) => {
+    this.props.listUsers(pageNo).then((a) => {
       this.setState({isLoading: false});
     });
   }
   render() {
-    // console.log('USERS DATA', this.props.friends.users_data);
     var data = this.props.friends.users_data;
     return (
       <ScrollView>
@@ -39,6 +44,14 @@ class Users extends React.Component {
             </View>
           )}
 
+          {/* <TouchableOpacity
+            style={styles.page}
+            onPress={() => (this.paginate(2), this.setState({pageNumber: 2}))}>
+            <Text>Go to next list</Text>
+          </TouchableOpacity> */}
+
+          {this.renderButton()}
+
           {this.state.isLoading && (
             <View style={styles.isLoading}>
               <ActivityIndicator size="large" color="rgb(98,176,223)" />
@@ -47,6 +60,28 @@ class Users extends React.Component {
         </View>
       </ScrollView>
     );
+  }
+
+  renderButton() {
+    {
+      if (this.state.pageNumber === 1) {
+        return (
+          <TouchableOpacity
+            style={styles.page}
+            onPress={() => (this.paginate(2), this.setState({pageNumber: 2}))}>
+            <Text>Next</Text>
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableOpacity
+            style={styles.page}
+            onPress={() => (this.paginate(1), this.setState({pageNumber: 1}))}>
+            <Text>Prev</Text>
+          </TouchableOpacity>
+        );
+      }
+    }
   }
 
   renderList() {
@@ -107,6 +142,14 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(Users);
 
 const styles = StyleSheet.create({
+  page: {
+    borderWidth: 1,
+    padding: hp(10),
+    margin: hp(10),
+    borderRadius: hp(5),
+    width: wp(50),
+    alignSelf: 'flex-end',
+  },
   email: {
     fontSize: hp(16),
     color: '#747d8c',

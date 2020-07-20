@@ -3,10 +3,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  FlatList,
   ActivityIndicator,
   TouchableOpacity,
-  ImageBackground,
 } from 'react-native';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
