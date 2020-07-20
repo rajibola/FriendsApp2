@@ -43,8 +43,7 @@ class Users extends React.Component {
     });
   }
   render() {
-    var data = this.props.friends.users_data.data;
-    console.log('SHOW NULL DATA', data);
+    var data = this.props.friends.users_data;
     return (
       <View>
         <ScrollView>
@@ -56,6 +55,11 @@ class Users extends React.Component {
               </View>
             )}
 
+            {data.data.length < 1 && (
+              <View style={styles.emptyArrayView}>
+                <Text style={styles.emptyArrayText}>No More Data</Text>
+              </View>
+            )}
             {this.renderButton()}
 
             {this.state.isLoading && (
@@ -131,7 +135,7 @@ class Users extends React.Component {
   }
 
   renderHeader() {
-    var text = this.props.friends.users_data.ad.text;
+    var ad = this.props.friends.users_data.ad;
     return (
       <View style={styles.header}>
         <Image
@@ -139,8 +143,8 @@ class Users extends React.Component {
           source={require('../assets/images/codeLogo.png')}
         />
         <View>
-          <Text style={styles.companyName}>StatusCode Weekly</Text>
-          <Text style={styles.companyText}>{text}</Text>
+          <Text style={styles.companyName}>{ad.company}</Text>
+          <Text style={styles.companyText}>{ad.text}</Text>
         </View>
       </View>
     );
@@ -157,6 +161,15 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(Users);
 
 const styles = StyleSheet.create({
+  emptyArrayView: {
+    width: deviceWidth,
+    height: deviceWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyArrayText: {
+    fontSize: hp(30),
+  },
   paginate: {
     flexDirection: 'row',
     alignSelf: 'flex-end',
