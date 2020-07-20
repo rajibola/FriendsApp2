@@ -25,40 +25,47 @@ class Users extends React.Component {
     this.paginate(this.state.pageNumber);
   }
 
+  async incrementPageNo() {
+    await this.setState({pageNumber: this.state.pageNumber + 1});
+    this.paginate(this.state.pageNumber);
+  }
+
+  async decrementPageNo() {
+    await this.setState({pageNumber: this.state.pageNumber - 1});
+    this.paginate(this.state.pageNumber);
+  }
+
   paginate(pageNo) {
-    console.log('PAGE NO', pageNo);
+    // console.log('PAGE NO', pageNo);
     this.setState({isLoading: true});
     this.props.listUsers(pageNo).then((a) => {
       this.setState({isLoading: false});
     });
   }
   render() {
-    var data = this.props.friends.users_data;
+    var data = this.props.friends.users_data.data;
+    console.log('SHOW NULL DATA', data);
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          {data && (
-            <View>
-              {this.renderHeader()}
-              {this.renderList()}
-            </View>
-          )}
+      <View>
+        <ScrollView>
+          <View style={styles.container}>
+            {data && (
+              <View>
+                {this.renderHeader()}
+                {this.renderList()}
+              </View>
+            )}
 
-          {/* <TouchableOpacity
-            style={styles.page}
-            onPress={() => (this.paginate(2), this.setState({pageNumber: 2}))}>
-            <Text>Go to next list</Text>
-          </TouchableOpacity> */}
+            {this.renderButton()}
 
-          {this.renderButton()}
-
-          {this.state.isLoading && (
-            <View style={styles.isLoading}>
-              <ActivityIndicator size="large" color="rgb(98,176,223)" />
-            </View>
-          )}
-        </View>
-      </ScrollView>
+            {this.state.isLoading && (
+              <View style={styles.isLoading}>
+                <ActivityIndicator size="large" color="rgb(98,176,223)" />
+              </View>
+            )}
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 
@@ -68,17 +75,25 @@ class Users extends React.Component {
         return (
           <TouchableOpacity
             style={styles.page}
-            onPress={() => (this.paginate(2), this.setState({pageNumber: 2}))}>
+            onPress={() => this.incrementPageNo()}>
             <Text>Next</Text>
           </TouchableOpacity>
         );
       } else {
         return (
-          <TouchableOpacity
-            style={styles.page}
-            onPress={() => (this.paginate(1), this.setState({pageNumber: 1}))}>
-            <Text>Prev</Text>
-          </TouchableOpacity>
+          <View style={styles.paginate}>
+            <TouchableOpacity
+              style={styles.page}
+              onPress={() => this.decrementPageNo()}>
+              <Text>Prev</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.page}
+              onPress={() => this.incrementPageNo()}>
+              <Text>Next</Text>
+            </TouchableOpacity>
+          </View>
         );
       }
     }
@@ -142,6 +157,10 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(Users);
 
 const styles = StyleSheet.create({
+  paginate: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+  },
   page: {
     borderWidth: 1,
     padding: hp(10),

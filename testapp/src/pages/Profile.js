@@ -18,7 +18,7 @@ class Profile extends React.Component {
   constructor() {
     super();
     this.state = {
-      isLoading: false,
+      isLoading: true,
     };
   }
 
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     height: deviceHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,.4)',
+    backgroundColor: 'rgba(0,0,0,.9)',
     zIndex: 1000,
   },
   firstName: {

@@ -108,7 +108,7 @@ export const friends = {
       await fetch(`${baseURL}/users?page=${data || 1}`)
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           // return this.setState({ data: json.data, isLoading: false });
           this.saveUsersList(json);
         })
