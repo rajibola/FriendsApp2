@@ -1,15 +1,8 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {connect} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/dist/Fontisto';
 import Icona from 'react-native-vector-icons/dist/Entypo';

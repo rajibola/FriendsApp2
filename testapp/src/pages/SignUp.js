@@ -62,25 +62,6 @@ class SignUp extends React.Component {
           alert("you've entered the wrong parameter");
         }
       });
-      // fetch(`https://reqres.in/api/register`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     email,
-      //     password,
-      //   }),
-      // })
-      //   .then((response) => response.json())
-      //   .then((json) => {
-      //     console.log('Success', json);
-      //     this.setState({isLoading: false});
-      //     alert(`your token is ` + json.token);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
     }
   }
 
@@ -252,7 +233,6 @@ const styles = StyleSheet.create({
     color: 'rgba(112, 161, 255,1.0)',
     letterSpacing: -1,
     fontSize: hp(20),
-    fontWeight: 'bold',
   },
   questionView: {
     color: 'rgba(0,0,0,1.0)',

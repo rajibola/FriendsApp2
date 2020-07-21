@@ -30,12 +30,15 @@ import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import Users from './src/pages/Users';
 import Profile from './src/pages/Profile';
+import About from './src/pages/About';
 
 import {Provider} from 'react-redux';
 import {init} from '@rematch/core';
 import {friends} from './src/redux/models.js';
 
 const Stack = createStackNavigator();
+
+console.disableYellowBox = true;
 
 const models = {
   friends,
@@ -49,10 +52,16 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Sign In">
+        <Stack.Navigator
+          initialRouteName="About"
+          // screenOptions={{
+          //   headerShown: false,
+          // }}
+        >
           <Stack.Screen name="Sign In" component={SignIn} />
           <Stack.Screen name="Sign Up" component={SignUp} />
           <Stack.Screen name="Users" component={Users} />
+          <Stack.Screen name="About" component={About} />
           <Stack.Screen
             name="Profile"
             component={Profile}
@@ -63,44 +72,5 @@ const App = () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

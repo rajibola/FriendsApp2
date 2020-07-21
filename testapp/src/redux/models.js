@@ -4,7 +4,6 @@ const delay = (time) =>
 
 export const friends = {
   state: {
-    isLoading: false,
     access_token: null,
     register_id: null,
     register_token: null,
@@ -13,12 +12,6 @@ export const friends = {
   },
 
   reducers: {
-    toggleLoader(state, status) {
-      return {
-        ...state,
-        isLoading: status,
-      };
-    },
     saveAccessToken(state, token) {
       return {
         ...state,
@@ -69,9 +62,7 @@ export const friends = {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log('Success', json);
           this.saveAccessToken(json.token);
-          //   alert('your token is ' + json.token);
         })
         .catch((error) => {
           console.log(error);
@@ -82,7 +73,6 @@ export const friends = {
 
     async registerUser(data, state) {
       const {password, email} = data;
-      console.log(data);
       await fetch(`${baseURL}/register`, {
         method: 'POST',
         headers: {
@@ -97,7 +87,6 @@ export const friends = {
         .then((json) => {
           this.saveRegisterId(json.id);
           this.saveRegisterToken(json.token);
-          console.log(json);
         })
         .catch((error) => {
           console.log(error);
@@ -108,8 +97,6 @@ export const friends = {
       await fetch(`${baseURL}/users?page=${data || 1}`)
         .then((response) => response.json())
         .then((json) => {
-          // console.log(json);
-          // return this.setState({ data: json.data, isLoading: false });
           this.saveUsersList(json);
         })
         .catch((error) => {
@@ -121,7 +108,6 @@ export const friends = {
       await fetch(`${baseURL}/users/${data}`)
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
           this.saveUserData(json);
         })
         .catch((error) => {

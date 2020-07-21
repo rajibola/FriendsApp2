@@ -5,12 +5,12 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity,
+  Linking,
 } from 'react-native';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {connect} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 class Users extends React.Component {
   constructor() {
@@ -36,7 +36,6 @@ class Users extends React.Component {
   }
 
   paginate(pageNo) {
-    // console.log('PAGE NO', pageNo);
     this.setState({isLoading: true});
     this.props.listUsers(pageNo).then((a) => {
       this.setState({isLoading: false});
@@ -52,14 +51,14 @@ class Users extends React.Component {
               <View>
                 {this.renderHeader()}
                 {this.renderList()}
+                {data.data.length < 1 && (
+                  <View style={styles.emptyArrayView}>
+                    <Text style={styles.emptyArrayText}>No More Data!</Text>
+                  </View>
+                )}
               </View>
             )}
 
-            {data.data.length < 1 && (
-              <View style={styles.emptyArrayView}>
-                <Text style={styles.emptyArrayText}>No More Data</Text>
-              </View>
-            )}
             {this.renderButton()}
 
             {this.state.isLoading && (
@@ -143,7 +142,15 @@ class Users extends React.Component {
           source={require('../assets/images/codeLogo.png')}
         />
         <View>
-          <Text style={styles.companyName}>{ad.company}</Text>
+          <Text
+            style={styles.companyName}
+            onPress={() =>
+              Linking.openURL(`${ad.url}`).catch((err) =>
+                console.log('An error occurred', err),
+              )
+            }>
+            {ad.company}
+          </Text>
           <Text style={styles.companyText}>{ad.text}</Text>
         </View>
       </View>
@@ -169,10 +176,10 @@ const styles = StyleSheet.create({
   },
   emptyArrayText: {
     fontSize: hp(30),
+    color: '#747d8c',
   },
   paginate: {
     flexDirection: 'row',
-    alignSelf: 'flex-end',
   },
   page: {
     borderWidth: 1,
@@ -180,7 +187,8 @@ const styles = StyleSheet.create({
     margin: hp(10),
     borderRadius: hp(5),
     width: wp(50),
-    alignSelf: 'flex-end',
+    borderColor: '#747d8c',
+    justifyContent: 'flex-end',
   },
   email: {
     fontSize: hp(16),
