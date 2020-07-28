@@ -11,6 +11,7 @@ import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
 import {connect} from 'react-redux';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import Header from '../components/Header';
 
 class Users extends React.Component {
   constructor() {
@@ -46,6 +47,7 @@ class Users extends React.Component {
     return (
       <View>
         <ScrollView>
+          <Header />
           <View style={styles.container}>
             {data && (
               <View>

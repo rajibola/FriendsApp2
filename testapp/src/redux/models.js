@@ -1,6 +1,10 @@
-const baseURL = 'https://reqres.in/api';
-const delay = (time) =>
-  new Promise((resolve) => setTimeout(() => resolve(), time));
+const baseURL = [
+  'https://reqres.in/api',
+  'https://jobs.github.com/positions.json?',
+];
+
+// const delay = (time) =>
+// new Promise((resolve) => setTimeout(() => resolve(), time));
 
 export const friends = {
   state: {
@@ -9,9 +13,16 @@ export const friends = {
     register_token: null,
     users_data: null,
     user_data: null,
+    jobs_list: [],
   },
 
   reducers: {
+    saveJobsList(state, jobsList) {
+      return {
+        ...state,
+        jobs_list: jobsList,
+      };
+    },
     saveAccessToken(state, token) {
       return {
         ...state,
@@ -50,7 +61,7 @@ export const friends = {
     async loginUser(data, state) {
       const {password, email} = data;
       console.log(data);
-      await fetch(`${baseURL}/login`, {
+      await fetch(`${baseURL[0]}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +84,7 @@ export const friends = {
 
     async registerUser(data, state) {
       const {password, email} = data;
-      await fetch(`${baseURL}/register`, {
+      await fetch(`${baseURL[0]}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +105,7 @@ export const friends = {
     },
 
     async listUsers(data, state) {
-      await fetch(`${baseURL}/users?page=${data || 1}`)
+      await fetch(`${baseURL[0]}/users?page=${data || 1}`)
         .then((response) => response.json())
         .then((json) => {
           this.saveUsersList(json);
@@ -105,10 +116,26 @@ export const friends = {
     },
 
     async displayProfile(data, state) {
-      await fetch(`${baseURL}/users/${data}`)
+      await fetch(`${baseURL[0]}/users/${data}`)
         .then((response) => response.json())
         .then((json) => {
           this.saveUserData(json);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+
+    async getJobs(data, state) {
+      const {description, location} = data;
+      console.log('RECIEVED DATA', description, location);
+      await fetch(
+        `${baseURL[1]}description=${description}&location=${location}`,
+      )
+        .then((response) => response.json())
+        .then((json) => {
+          this.saveJobsList(json);
+          console.log(json);
         })
         .catch((error) => {
           console.error(error);
