@@ -1,6 +1,7 @@
 const baseURL = [
   'https://reqres.in/api',
   'https://jobs.github.com/positions.json?',
+  'https://jobs.github.com/positions',
 ];
 
 // const delay = (time) =>
@@ -14,9 +15,16 @@ export const friends = {
     users_data: null,
     user_data: null,
     jobs_list: [],
+    job_data: [],
   },
 
   reducers: {
+    saveJobData(state, jobData) {
+      return {
+        ...state,
+        job_data: jobData,
+      };
+    },
     saveJobsList(state, jobsList) {
       return {
         ...state,
@@ -128,17 +136,28 @@ export const friends = {
 
     async getJobs(data, state) {
       const {description, location} = data;
-      console.log('RECIEVED DATA', description, location);
       await fetch(
         `${baseURL[1]}description=${description}&location=${location}`,
       )
         .then((response) => response.json())
         .then((json) => {
           this.saveJobsList(json);
-          console.log(json);
         })
         .catch((error) => {
           console.error(error);
+        });
+    },
+
+    async getJob(data, state) {
+      console.log('RECIEVED ID', data);
+      await fetch(`${baseURL[2]}/${data}.json?markdown=true`)
+        .then((response) => response.json())
+        .then((json) => {
+          this.saveJobData(json);
+        })
+        .catch((error) => {
+          console.error(error);
+          //
         });
     },
   },
