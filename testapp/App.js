@@ -31,6 +31,7 @@ import SignUp from './src/pages/SignUp';
 import Users from './src/pages/Users';
 import Profile from './src/pages/Profile';
 import About from './src/pages/About';
+import SingleJobPage from './src/pages/SingleJobPage';
 
 import {Provider} from 'react-redux';
 import {init} from '@rematch/core';
@@ -59,6 +60,7 @@ const App = () => {
           <Stack.Screen name="Sign Up" component={SignUp} />
           <Stack.Screen name="Users" component={Users} />
           <Stack.Screen name="About" component={About} />
+          <Stack.Screen name="SingleJobPage" component={SingleJobPage} />
           <Stack.Screen
             name="Profile"
             component={Profile}

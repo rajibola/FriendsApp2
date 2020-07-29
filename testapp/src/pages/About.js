@@ -5,6 +5,7 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
@@ -68,81 +69,101 @@ class About extends React.Component {
     var pageData = data.slice(from, to);
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <Text>Github Jobs</Text>
+      <SafeAreaView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
+            <Text>Github Jobs</Text>
 
-          <View>
-            <FloatingLabelInput
-              label="Description"
-              value={this.state.description}
-              onChangeText={this.handleTextChange}
-            />
-            <FloatingLabelInput
-              label="Location"
-              value={this.state.location}
-              onChangeText={this.handlePassChange}
-            />
             <View>
-              <Button
-                name="Search"
-                color="rgba(0,0,0,0.5)"
-                width={wp(100)}
-                onPress={() => this.submit()}
+              <FloatingLabelInput
+                label="Description"
+                value={this.state.description}
+                onChangeText={this.handleTextChange}
               />
+              <FloatingLabelInput
+                label="Location"
+                value={this.state.location}
+                onChangeText={this.handlePassChange}
+              />
+              <View>
+                <Button
+                  name="Search"
+                  color="rgba(0,0,0,0.5)"
+                  width={wp(100)}
+                  onPress={() => this.submit()}
+                />
+              </View>
             </View>
-          </View>
 
-          <View style={styles.jobListContainer}>
-            <FlatList
-              data={pageData}
-              renderItem={({item, index}) => (
-                <TouchableOpacity style={styles.jobListView}>
-                  <View style={styles.companyData}>
-                    <View style={styles.box1}>
-                      <Text style={styles.jobTitle}>{item.title}</Text>
-                      <Text style={styles.company}>
-                        {item.company} ({item.type})
-                      </Text>
-                      <Text style={styles.company}>
-                        Location: {item.location}
-                      </Text>
-                      <Text style={styles.company}>
-                        Date: {item.created_at}
-                      </Text>
+            <View style={styles.jobListContainer}>
+              <FlatList
+                data={pageData}
+                renderItem={({item, index}) => (
+                  <TouchableOpacity
+                    style={styles.jobListView}
+                    onPress={() =>
+                      this.props.navigation.navigate('SingleJobPage', {
+                        id: item.id,
+                      })
+                    }>
+                    <View style={styles.companyData}>
+                      <View style={styles.box1}>
+                        <Text style={styles.jobTitle}>{item.title}</Text>
+                        <Text style={styles.company}>
+                          {item.company} ({item.type})
+                        </Text>
+                        <Text style={styles.company}>
+                          Location: {item.location}
+                        </Text>
+                        <Text style={styles.company}>
+                          Date: {item.created_at}
+                        </Text>
+                        <Text>{item.id}</Text>
+                      </View>
+
+                      <Image
+                        style={styles.image}
+                        source={{uri: item.company_logo}}
+                      />
                     </View>
+                  </TouchableOpacity>
+                )}
+              />
 
-                    <Image
-                      style={styles.image}
-                      source={{uri: item.company_logo}}
+              {data.length > 10 && (
+                <View style={styles.pagination}>
+                  {/* <Text onPress={() => this.decrementPageNo()}>back</Text>
+                <Text onPress={() => this.incrementPageNo()}>next</Text> */}
+                  <Text>
+                    page {from + 1}-{to} of {data.length}
+                  </Text>
+                  <View style={styles.paginationButton}>
+                    <Icon
+                      name="left"
+                      size={18}
+                      color="#000"
+                      onPress={() => this.decrementPageNo()}
+                    />
+
+                    <Icon
+                      name="right"
+                      size={18}
+                      color="#000"
+                      onPress={() => this.incrementPageNo()}
                     />
                   </View>
-                </TouchableOpacity>
-              )}
-            />
-
-            {data.length > 10 && (
-              <View style={styles.pagination}>
-                {/* <Text onPress={() => this.decrementPageNo()}>back</Text>
-                <Text onPress={() => this.incrementPageNo()}>next</Text> */}
-                <Text>
-                  page {from + 1}-{to} of {data.length}
-                </Text>
-                <View style={styles.paginationButton}>
-                  <Icon name="left" size={18} color="#000" />
-                  <Icon name="right" size={18} color="#000" />
                 </View>
+              )}
+            </View>
+
+            {this.state.isLoading && (
+              <View style={styles.isLoading}>
+                <ActivityIndicator size="large" color="rgb(98,176,223)" />
               </View>
             )}
           </View>
-
-          {this.state.isLoading && (
-            <View style={styles.isLoading}>
-              <ActivityIndicator size="large" color="rgb(98,176,223)" />
-            </View>
-          )}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

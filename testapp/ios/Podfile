@@ -12,6 +12,8 @@ target 'testapp' do
 
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'testappTests' do
     inherit! :complete
     # Pods for testing

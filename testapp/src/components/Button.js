@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {wp, hp} from './common';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
+
 export default class Button extends React.Component {
   render() {
     return (
