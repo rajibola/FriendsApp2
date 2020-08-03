@@ -42,7 +42,8 @@ class SingleJobPage extends React.Component {
       paddingVertical: hp(10),
       padding: hp(20),
       color: '#333',
-      borderWidth: 1,
+      // borderWidth: 1,
+      marginTop: hp(40),
       // lineHeight: hp(1.6),
     },
 
@@ -230,6 +231,9 @@ class SingleJobPage extends React.Component {
           <View style={styles.markdownContainer}>
             <View style={styles.companyView}>
               <Text style={styles.companyText}>{data.company}</Text>
+              <Text>
+                {data.type} | {data.location}
+              </Text>
             </View>
             <Markdown style={this.markdownStyles}>{data.description}</Markdown>
           </View>
@@ -268,22 +272,28 @@ export default connect(mapState, mapDispatch)(SingleJobPage);
 const styles = StyleSheet.create({
   scrollview: {flex: 1},
   companyText: {
-    // fontSize: hp(30),
-    // marginVertical: hp(15),
-    // backgroundColor: 'rgba(255, 255, 255,.98)',
+    fontSize: hp(30),
+    lineHeight: hp(30),
+    textAlign: 'center',
+    width: wp(350),
   },
   companyView: {
-    marginVertical: hp(15),
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    height: hp(60),
+    paddingVertical: hp(15),
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+
     // borderWidth: 1,
   },
   markdownContainer: {
-    backgroundColor: 'rgba(255,255,255,.98)',
+    minHeight: deviceHeight,
+
     borderRadius: wp(3),
     alignItems: 'center',
     // borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255,.95)',
     marginTop: deviceWidth - wp(200),
     width: wp(350),
 
