@@ -37,13 +37,14 @@ class SingleJobPage extends React.Component {
   markdownStyles = {
     body: {
       fontFamily: 'Lato-Light',
-      // width: wp(350),
+      width: wp(350),
       fontSize: hp(15),
       paddingVertical: hp(10),
       padding: hp(20),
       color: '#333',
       // borderWidth: 1,
-      marginTop: hp(40),
+      marginTop: hp(80),
+      elevation: 1,
       // lineHeight: hp(1.6),
     },
 
@@ -60,7 +61,7 @@ class SingleJobPage extends React.Component {
       color: 'black',
       fontFamily: 'RobotoCondensed-Light',
       fontWeight: 'bold',
-      fontSize: hp(28),
+      fontSize: hp(24),
     },
 
     heading2: {
@@ -71,6 +72,7 @@ class SingleJobPage extends React.Component {
       borderBottomColor: '#ccc',
       fontFamily: 'RobotoCondensed-Light',
       fontWeight: 'bold',
+      fontSize: hp(20),
     },
     heading3: {
       fontSize: hp(18),
@@ -231,20 +233,41 @@ class SingleJobPage extends React.Component {
           <View style={styles.markdownContainer}>
             <View style={styles.companyView}>
               <Text style={styles.companyText}>{data.company}</Text>
-              <Text>
+              <Text style={styles.subtext}>
                 {data.type} | {data.location}
               </Text>
             </View>
             <Markdown style={this.markdownStyles}>{data.description}</Markdown>
           </View>
+
           <View
-            style={{
-              // backgroundColor: '#000',
-              marginTop: hp(25),
-            }}>
-            <Text>How To Apply</Text>
+            style={[
+              styles.markdownContainer,
+              {
+                marginVertical: hp(10),
+                marginTop: hp(10),
+                minHeight: hp(100),
+                alignItems: 'center',
+              },
+            ]}>
+            <View
+              style={[styles.companyView, {position: 'relative', top: null}]}>
+              <Text style={styles.companyText}>How To Apply</Text>
+            </View>
+            <Markdown
+              style={
+                ([this.markdownStyles, {textAlign: 'center'}],
+                {
+                  body: {
+                    marginTop: hp(0),
+                    justifyContent: 'center',
+                    paddingHorizontal: wp(20),
+                  },
+                })
+              }>
+              {data.how_to_apply}
+            </Markdown>
           </View>
-          <Markdown style={this.markdownStyles}>{data.how_to_apply}</Markdown>
         </View>
         {this.state.isLoading && (
           <View style={styles.isLoading}>
@@ -270,12 +293,17 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(SingleJobPage);
 
 const styles = StyleSheet.create({
+  subtext: {
+    fontSize: hp(15),
+  },
   scrollview: {flex: 1},
   companyText: {
-    fontSize: hp(30),
+    fontSize: hp(25),
     lineHeight: hp(30),
     textAlign: 'center',
     width: wp(350),
+    marginTop: hp(20),
+    // fontWeight: 'bold',
   },
   companyView: {
     height: hp(60),
@@ -288,8 +316,8 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   markdownContainer: {
-    minHeight: deviceHeight,
-
+    minHeight: 0,
+    paddingTop: hp(0),
     borderRadius: wp(3),
     alignItems: 'center',
     // borderWidth: 1,
@@ -305,7 +333,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
 
-    elevation: 5,
+    elevation: 6,
   },
   image: {
     width: deviceWidth,
@@ -324,7 +352,7 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     width: deviceWidth,
-    height: deviceHeight,
+    minHeight: deviceHeight,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,.9)',
