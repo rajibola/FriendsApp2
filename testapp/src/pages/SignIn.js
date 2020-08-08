@@ -135,7 +135,12 @@ class SignIn extends React.Component {
           </Text>
         </View>
 
-        <Button name="Sign In" onPress={() => this.submit()} />
+        <Button
+          name="Sign In"
+          onPress={() => this.submit()}
+          color="#ff3838"
+          size={wp(300)}
+        />
 
         {/* <TouchableOpacity style={styles.button} onPress={() => this.submit()}>
             <Text style={styles.buttonText}>Sign In</Text>

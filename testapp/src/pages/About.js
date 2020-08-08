@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
@@ -42,20 +43,20 @@ class About extends React.Component {
     this.setState({isLoading: true});
     const {description, location} = this.state;
 
-    if (description.trim() === '') {
-      alert('enter a valid parameter');
+    // if (description) {
+    //   alert('enter a valid parameter');
+    //   this.setState({isLoading: false});
+    // } else {
+    this.setState({isLoading: true});
+    var data = {
+      description: description.toLowerCase(),
+      location: location.toLowerCase(),
+    };
+    console.log('ENTERED DATA', data);
+    this.props.getJobs(data).then((a) => {
       this.setState({isLoading: false});
-    } else {
-      this.setState({isLoading: true});
-      var data = {
-        description: description.toLowerCase(),
-        location: location.toLowerCase(),
-      };
-      console.log('ENTERED DATA', data);
-      this.props.getJobs(data).then((a) => {
-        this.setState({isLoading: false});
-      });
-    }
+    });
+    // }
   }
 
   render() {
@@ -72,9 +73,12 @@ class About extends React.Component {
       <SafeAreaView>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.container}>
-            <Text>Github Jobs</Text>
-
+            <StatusBar backgroundColor="#fff" barStyle="dark-content" />
             <View>
+              <Text>Github Jobs</Text>
+            </View>
+
+            <View style={styles.center}>
               <FloatingLabelInput
                 label="Description"
                 value={this.state.description}
@@ -88,8 +92,8 @@ class About extends React.Component {
               <View>
                 <Button
                   name="Search"
-                  color="rgba(0,0,0,0.5)"
-                  width={wp(100)}
+                  color="#ff3838"
+                  size={wp(350)}
                   onPress={() => this.submit()}
                 />
               </View>
@@ -118,7 +122,7 @@ class About extends React.Component {
                         <Text style={styles.company}>
                           Date: {item.created_at}
                         </Text>
-                        <Text>{item.id}</Text>
+                        {/* <Text>{item.id}</Text> */}
                       </View>
 
                       <Image
@@ -179,6 +183,9 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(About);
 
 const styles = StyleSheet.create({
+  center: {
+    alignItems: 'center',
+  },
   paginationButton: {
     flexDirection: 'row',
     height: hp(50),
@@ -200,7 +207,7 @@ const styles = StyleSheet.create({
     height: deviceHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: '#fff',
   },
   company: {
     fontSize: hp(16),
@@ -243,7 +250,7 @@ const styles = StyleSheet.create({
   },
   jobListView: {
     width: wp(350),
-    height: hp(130),
+    minHeight: hp(130),
     margin: hp(10),
     borderRadius: wp(2),
     backgroundColor: '#fff',
@@ -298,8 +305,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    // borderWidth: 1,
     // backgroundColor: 'rgba(0,0,0,1)',//#
     width: deviceWidth,
     minHeight: deviceHeight,
+    backgroundColor: '#fff',
   },
 });
