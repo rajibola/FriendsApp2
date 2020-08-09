@@ -46,7 +46,7 @@ class SingleJobPage extends React.Component {
       // borderWidth: 1,
       marginTop: hp(80),
       elevation: 1,
-      // lineHeight: hp(1.6),
+      lineHeight: hp(20),
     },
 
     link: {
