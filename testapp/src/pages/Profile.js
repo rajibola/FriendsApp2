@@ -81,7 +81,9 @@ class Profile extends React.Component {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.props.navigation.navigate('About')}>
           <Text style={styles.buttonText}>Follow Me</Text>
         </TouchableOpacity>
       </View>
