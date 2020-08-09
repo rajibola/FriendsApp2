@@ -5,6 +5,7 @@ import {
   Image,
   ActivityIndicator,
   BackHandler,
+  Linking,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
 import React from 'react';
@@ -36,7 +37,7 @@ class SingleJobPage extends React.Component {
 
   markdownStyles = {
     body: {
-      fontFamily: 'Lato-Light',
+      // fontFamily: 'Lato-Light',
       width: wp(350),
       fontSize: hp(15),
       paddingVertical: hp(10),
@@ -267,6 +268,18 @@ class SingleJobPage extends React.Component {
               }>
               {data.how_to_apply}
             </Markdown>
+            <View style={{marginBottom: hp(15)}}>
+              <Button
+                name="GITHUB JOBS"
+                size={wp(330)}
+                color="green"
+                onPress={() =>
+                  Linking.openURL(`${data.url}`).catch((err) =>
+                    console.log('An error occurred', err),
+                  )
+                }
+              />
+            </View>
           </View>
         </View>
         {this.state.isLoading && (
@@ -346,16 +359,13 @@ const styles = StyleSheet.create({
   },
   isLoading: {
     flex: 1,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
+
     position: 'absolute',
     width: deviceWidth,
     minHeight: deviceHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,.9)',
+    backgroundColor: '#fff',
     zIndex: 1100,
     elevation: 1100,
   },
