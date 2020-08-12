@@ -340,6 +340,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    paddingBottom: hp(20),
     // position: 'absolute',
     top: 0,
 

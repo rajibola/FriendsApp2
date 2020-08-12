@@ -36,6 +36,7 @@ import SingleJobPage from './src/pages/SingleJobPage';
 import {Provider} from 'react-redux';
 import {init} from '@rematch/core';
 import {friends} from './src/redux/models.js';
+import MapPage from './src/pages/Maps';
 
 const Stack = createStackNavigator();
 
@@ -54,13 +55,14 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Sign In"
+          initialRouteName="MapPage"
           screenOptions={{headerShown: false}}>
           <Stack.Screen name="Sign In" component={SignIn} />
           <Stack.Screen name="Sign Up" component={SignUp} />
           <Stack.Screen name="Users" component={Users} />
           <Stack.Screen name="About" component={About} />
           <Stack.Screen name="SingleJobPage" component={SingleJobPage} />
+          <Stack.Screen name="MapPage" component={MapPage} />
           <Stack.Screen
             name="Profile"
             component={Profile}
