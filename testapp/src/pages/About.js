@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   StatusBar,
+  TextInput,
 } from 'react-native';
 import React from 'react';
 import {wp, hp, deviceWidth, deviceHeight} from '../components/common';
@@ -68,32 +69,37 @@ class About extends React.Component {
     const to = (page + 1) * itemsPerPage;
 
     var pageData = data.slice(from, to);
+    console.log('PAGE', this.state.page);
 
     return (
       <SafeAreaView>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.container}>
-            <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-            <View>
-              <Text>Github Jobs</Text>
+            <StatusBar backgroundColor="#000" barStyle="light-content" />
+            <View style={styles.githubView}>
+              <Text style={styles.githubText}>Github Jobs</Text>
             </View>
 
             <View style={styles.center}>
-              <FloatingLabelInput
-                label="Description"
-                value={this.state.description}
+              <TextInput
+                placeholder="Description"
+                style={styles.textInput}
+                placeholderTextColor="rgba(87, 96, 111,1.0)"
                 onChangeText={this.handleTextChange}
+                value={this.state.description}
               />
-              <FloatingLabelInput
-                label="Location"
-                value={this.state.location}
+              <TextInput
+                placeholder="Location"
+                style={styles.textInput}
+                placeholderTextColor="rgba(87, 96, 111,1.0)"
                 onChangeText={this.handlePassChange}
+                value={this.state.location}
               />
               <View>
                 <Button
                   name="Search"
                   color="#ff3838"
-                  size={wp(350)}
+                  size={wp(300)}
                   onPress={() => this.submit()}
                 />
               </View>
@@ -125,10 +131,23 @@ class About extends React.Component {
                         {/* <Text>{item.id}</Text> */}
                       </View>
 
-                      <Image
-                        style={styles.image}
-                        source={{uri: item.company_logo}}
-                      />
+                      {item.company_logo === null ? (
+                        <View
+                          style={[
+                            styles.image,
+                            {
+                              backgroundColor: 'green',
+                              padding: hp(10),
+                            },
+                          ]}>
+                          <Text style={styles.github}>Github Jobs</Text>
+                        </View>
+                      ) : (
+                        <Image
+                          style={styles.image}
+                          source={{uri: item.company_logo}}
+                        />
+                      )}
                     </View>
                   </TouchableOpacity>
                 )}
@@ -142,12 +161,14 @@ class About extends React.Component {
                     page {from + 1}-{to} of {data.length}
                   </Text>
                   <View style={styles.paginationButton}>
-                    <Icon
-                      name="left"
-                      size={18}
-                      color="#000"
-                      onPress={() => this.decrementPageNo()}
-                    />
+                    {from > 0 && (
+                      <Icon
+                        name="left"
+                        size={18}
+                        color="#000"
+                        onPress={() => this.decrementPageNo()}
+                      />
+                    )}
 
                     <Icon
                       name="right"
@@ -183,8 +204,39 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(About);
 
 const styles = StyleSheet.create({
+  github: {
+    fontSize: hp(15),
+    color: '#fff',
+  },
+  textInput: {
+    width: wp(300),
+    height: hp(56),
+    // borderWidth: 1,
+    // marginTop: hp(14),
+    marginBottom: hp(14),
+    padding: hp(10),
+    paddingLeft: wp(20),
+    backgroundColor: 'rgba(241, 242, 246,.9)',
+    color: 'rgba(87, 96, 111,1.0)',
+  },
+  githubText: {
+    color: '#fff',
+    fontSize: hp(50),
+  },
+  githubView: {
+    width: deviceWidth,
+    height: hp(130),
+    // borderWidth: 1,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   center: {
     alignItems: 'center',
+    backgroundColor: '#000',
+    width: deviceWidth,
+    minHeight: hp(14),
+    paddingBottom: hp(40),
   },
   paginationButton: {
     flexDirection: 'row',
@@ -250,7 +302,7 @@ const styles = StyleSheet.create({
   },
   jobListView: {
     width: wp(350),
-    minHeight: hp(130),
+    minHeight: hp(100),
     margin: hp(10),
     borderRadius: wp(2),
     backgroundColor: '#fff',
@@ -266,7 +318,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
 
-    elevation: 6,
+    elevation: 1.8,
   },
   header: {
     flexDirection: 'row',
@@ -300,7 +352,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'black',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   container: {
     flex: 1,

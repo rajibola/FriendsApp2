@@ -43,9 +43,10 @@ class SingleJobPage extends React.Component {
       paddingVertical: hp(10),
       padding: hp(20),
       color: '#333',
+      backgroundColor: '#fff',
       // borderWidth: 1,
-      marginTop: hp(80),
-      elevation: 1,
+      // marginTop: hp(80),
+      // elevation: 1,
       lineHeight: hp(20),
     },
 
@@ -113,25 +114,25 @@ class SingleJobPage extends React.Component {
     },
 
     blockquote: {
-      marginVertical: hp(15),
+      marginVertical: hp(10),
       borderLeftColor: '#ddd',
       borderWidth: wp(4),
       color: '#777',
-      paddingHorizontal: wp(15),
+      paddingHorizontal: wp(10),
     },
 
     bullet_list: {
-      marginVertical: hp(15),
+      marginVertical: hp(10),
     },
 
     ordered_list: {
-      marginVertical: hp(15),
+      marginVertical: hp(10),
     },
     bullet_list: {
-      marginVertical: hp(15),
+      marginVertical: hp(10),
     },
     table: {
-      marginVertical: hp(15),
+      marginVertical: hp(10),
     },
 
     tr: {
@@ -229,59 +230,70 @@ class SingleJobPage extends React.Component {
     return (
       <ScrollView style={styles.scrollview}>
         <View style={styles.container}>
-          <Image style={styles.image} source={{uri: data.company_logo}} />
-
-          <View style={styles.markdownContainer}>
-            <View style={styles.companyView}>
-              <Text style={styles.companyText}>{data.company}</Text>
-              <Text style={styles.subtext}>
-                {data.type} | {data.location}
-              </Text>
+          {data.company_logo === null ? (
+            <View style={[styles.image, {backgroundColor: 'black'}]}>
+              <Text style={styles.github}>Github Jobs</Text>
             </View>
-            <Markdown style={this.markdownStyles}>{data.description}</Markdown>
-          </View>
+          ) : (
+            <Image style={styles.image} source={{uri: data.company_logo}} />
+          )}
 
-          <View
-            style={[
-              styles.markdownContainer,
-              {
-                marginVertical: hp(10),
-                marginTop: hp(10),
-                minHeight: hp(100),
-                alignItems: 'center',
-              },
-            ]}>
+          <View>
+            <View style={styles.markdownContainer}>
+              <View style={styles.companyView}>
+                <Text style={styles.companyText}>{data.company}</Text>
+                <Text style={styles.subtext}>
+                  {data.type} | {data.location}
+                </Text>
+              </View>
+              <Markdown style={this.markdownStyles}>
+                {data.description}
+              </Markdown>
+            </View>
+
             <View
-              style={[styles.companyView, {position: 'relative', top: null}]}>
-              <Text style={styles.companyText}>How To Apply</Text>
-            </View>
-            <Markdown
-              style={
-                ([this.markdownStyles, {textAlign: 'center'}],
+              style={[
+                styles.markdownContainer,
                 {
-                  body: {
-                    marginTop: hp(0),
-                    justifyContent: 'center',
-                    paddingHorizontal: wp(20),
-                  },
-                })
-              }>
-              {data.how_to_apply}
-            </Markdown>
-            <View style={{marginBottom: hp(15)}}>
-              <Button
-                name="GITHUB JOBS"
-                size={wp(330)}
-                color="green"
-                onPress={() =>
-                  Linking.openURL(`${data.url}`).catch((err) =>
-                    console.log('An error occurred', err),
-                  )
-                }
-              />
+                  marginVertical: hp(10),
+                  marginTop: hp(10),
+                  minHeight: hp(100),
+                  alignItems: 'center',
+                },
+              ]}>
+              <View
+                style={[styles.companyView, {position: 'relative', top: null}]}>
+                <Text style={styles.companyText}>How To Apply</Text>
+              </View>
+              <Markdown
+                style={
+                  ([this.markdownStyles, {textAlign: 'center'}],
+                  {
+                    body: {
+                      marginTop: hp(0),
+                      justifyContent: 'center',
+                      paddingHorizontal: wp(20),
+                    },
+                  })
+                }>
+                {data.how_to_apply}
+              </Markdown>
+              <View style={{marginBottom: hp(15)}}>
+                <Button
+                  name="GITHUB JOBS"
+                  size={wp(330)}
+                  color="green"
+                  onPress={() =>
+                    Linking.openURL(`${data.url}`).catch((err) =>
+                      console.log('An error occurred', err),
+                    )
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
+
         {this.state.isLoading && (
           <View style={styles.isLoading}>
             <ActivityIndicator
@@ -306,6 +318,10 @@ const mapDispatch = (dispatch) => ({
 export default connect(mapState, mapDispatch)(SingleJobPage);
 
 const styles = StyleSheet.create({
+  github: {
+    fontSize: hp(50),
+    color: '#fff',
+  },
   subtext: {
     fontSize: hp(15),
   },
@@ -323,7 +339,8 @@ const styles = StyleSheet.create({
     paddingVertical: hp(15),
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
+    backgroundColor: '#fff',
+    // position: 'absolute',
     top: 0,
 
     // borderWidth: 1,
@@ -334,7 +351,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(3),
     alignItems: 'center',
     // borderWidth: 1,
-    backgroundColor: 'rgba(255, 255, 255,.95)',
+    backgroundColor: 'rgba(255, 255, 255,1)',
     marginTop: deviceWidth - wp(200),
     width: wp(350),
 
@@ -346,7 +363,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
 
-    elevation: 6,
+    elevation: 3,
   },
   image: {
     width: deviceWidth,
@@ -354,8 +371,10 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
     backgroundColor: 'white',
     position: 'absolute',
-    zIndex: -10,
-    elevation: -4,
+    // zIndex: -10,
+    // elevation: -4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   isLoading: {
     flex: 1,
