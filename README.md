@@ -9,7 +9,7 @@ It consist of three parts:
 
 **Walker:** Also created as a sub-application, to show the exact location of a user and then choose a destination, and then it shows the user the shortest route to get to the destination, and when the user is close to the destination it shows the image of the area using Google Maps API and Google Places API.
 
-### Technologies involved:
+### Technologies used:
 - React-native
 - Redux-rematch
 - React-native-maps
