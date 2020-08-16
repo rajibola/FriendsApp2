@@ -23,4 +23,4 @@ It consist of three parts:
 >
 > Done with `friends` and `Github Jobs` part. `Walker` is still-in-progress.
 
-![ezgif.com-video-to-gif](ezgif.com-video-to-gif.gif)
+![gif](https://i.ibb.co/M22qk4S/ezgif-com-video-to-gif.gif)
